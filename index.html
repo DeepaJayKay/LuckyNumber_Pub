@@ -1,44 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lucky Number Finder</title>
+  <meta charset="UTF-8" />
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Open+Sans&display=swap');
     body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background-color: #f9f9f9;
+      font-family: 'Cinzel Decorative', cursive;
+      background-image: url('https://deepajaykay.github.io/LuckyNumber_Pub/background3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #46334b;
+      text-shadow: 0 0 4px #000000;
+      padding: 250px;
+      text-align: center;
     }
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    .title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 36px;
+      color: gold;
+      text-shadow: 0 0 10px #ffd700;
+      margin-bottom: 10px;
     }
-    label, input, button {
-      display: block;
-      width: 100%;
-      margin-bottom: 1rem;
+    .subtitle {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 18px;
+      color: #ddd;
+      margin-bottom: 20px;
     }
-    #result {
-      font-size: 1.2rem;
+    input {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 22px;
       font-weight: bold;
-      margin-top: 1rem;
-      color: #007b00;
+      color: #2c3e50;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Find Your Lucky Number</h2>
-    <label for="dob">Enter your Date of Birth:</label>
-    <input type="date" id="dob" />
-    <button onclick="findLuckyNumber()">Get Lucky Number</button>
-    <div id="result"></div>
-  </div>
+<div class="container">
+  <h1 class="title">Find Your Lucky Number</h1>
+  <p class="subtitle">Enter your Date of Birth</p>
+  <input type="date" id="dobInput"><br>
+  <button onclick="findLuckyNumber()">Get Lucky Number</button>
+  <div class="result" id="result"></div>
+</div>
 
   <script>
     const luckyNumbers = {
@@ -53,34 +75,30 @@
       "9,1": 9, "9,2": 4, "9,3": 2, "9,4": 7, "9,5": 3, "9,6": 5, "9,7": 8, "9,8": 6, "9,9": 1
     };
 
-    function reduceToSingleDigit(num) {
-      while (num > 9) {
-        num = num.toString().split('').reduce((a, b) => a + Number(b), 0);
+    function reduceToSingleDigit(n) {
+      while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
+        n = n.toString().split('').reduce((a, b) => a + Number(b), 0);
       }
-      return num;
+      return n;
     }
 
     function findLuckyNumber() {
       const dob = document.getElementById("dob").value;
-      if (!dob) return alert("Please enter your date of birth.");
+      if (!dob) {
+        document.getElementById("result").innerText = "Please enter a valid date of birth.";
+        return;
+      }
 
-      const dateParts = new Date(dob);
-      const day = dateParts.getDate();
-      const month = dateParts.getMonth() + 1;
-      const year = dateParts.getFullYear();
-
+      const [year, month, day] = dob.split("-").map(Number);
       const birthNumber = reduceToSingleDigit(day);
-      const lifePathNumber = reduceToSingleDigit(day + month + [...year.toString()].reduce((a,b)=>a+ +b,0));
+      const lifePathNumber = reduceToSingleDigit(day + month + year);
 
       const key = `${birthNumber},${lifePathNumber}`;
       const lucky = luckyNumbers[key];
 
-      const result = document.getElementById("result");
-      if (lucky) {
-        result.textContent = `Your Birth Number is ${birthNumber}, Life Path Number is ${lifePathNumber}. Your Lucky Number is ${lucky}.`;
-      } else {
-        result.textContent = `No lucky number found for ${key}.`;
-      }
+      document.getElementById("result").innerText = lucky
+        ? `Your Lucky Number is: ${lucky}`
+        : `No lucky number found for this combination.`;
     }
   </script>
 </body>
