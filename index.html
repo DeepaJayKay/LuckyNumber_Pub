@@ -29,6 +29,7 @@
       padding: 40px;
       border-radius: 20px;
       box-shadow: 0 0 20px #ffd700;
+      max-width: 600px;
     }
 
     .title {
@@ -59,7 +60,7 @@
     }
 
     .dob-input::-webkit-calendar-picker-indicator {
-      filter: invert(1);
+      filter: filter: brightness(0) saturate(100%) invert(89%) sepia(93%) saturate(1235%) hue-rotate(2deg) brightness(110%) contrast(101%);
       cursor: pointer;
     }
 
@@ -85,6 +86,56 @@
       color: #00ffcc;
       text-shadow: 0 0 5px #00ffcc;
     }
+
+    .business-card {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 15px;
+      background-color: rgba(255, 215, 0, 0.1);
+      border: 1px solid gold;
+      color: #fff;
+      text-align: left;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      font-size: 16px;
+      line-height: 1.6;
+      animation: fadeIn 1s ease forwards;
+      position: relative;
+    }
+
+    .business-card .top-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .business-card .top-section .name-title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .business-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid gold;
+      object-fit: cover;
+      box-shadow: 0 0 8px gold;
+    }
+
+    .business-card a {
+      color: #00ffcc;
+      text-decoration: none;
+    }
+
+    .business-card a:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -94,6 +145,24 @@
     <input type="date" id="dobInput" class="dob-input" /><br>
     <button onclick="findLuckyNumber()">Get Lucky Number</button>
     <div class="result" id="result"></div>
+
+    <div class="business-card" id="businessCard">
+      <div class="top-section">
+        <div class="name-title">
+          🔮 <strong>Deepa JayKay</strong><br>
+          Tarot Card Reader & Numerologist
+        </div>
+        <img src="https://deepajaykay.github.io/LuckyNumber_Pub/Me_Image.jpg" alt="Deepa JayKay Photo" />
+      </div>
+      <br>
+      📍 <strong>Location:</strong> Chennai - 73<br>
+      📞 <strong>Phone:</strong> <a href="tel:+916380719683">+91 6380 719 683</a><br>
+      💌 <strong>Email:</strong> <a href="mailto:tarot.deephashanmugavelu@gmail.com">tarot.deephashanmugavelu@gmail.com</a><br><br>
+
+      🔗 <strong>Socials:</strong><br>
+      👉 <a href="https://www.instagram.com/deepa_jaykay/?hl=en" target="_blank">Instagram @deepa_jaykay</a><br>
+      👉 <a href="https://www.facebook.com/share/199yFUYfNM/?mibextid=wwXIfr" target="_blank">Facebook Profile</a><br>
+    </div>
   </div>
 
   <script>
@@ -118,6 +187,9 @@
 
     function findLuckyNumber() {
       const dob = document.getElementById("dobInput").value;
+      const businessCard = document.getElementById("businessCard");
+      businessCard.style.display = "none";
+
       if (!dob) {
         alert("Please enter your date of birth");
         return;
@@ -135,8 +207,10 @@
       const resultDiv = document.getElementById("result");
       if (luckyNumber) {
         resultDiv.innerHTML = `Your Lucky Number is : <span style="color: gold;">${luckyNumber}</span>`;
+        businessCard.style.display = "block";
       } else {
         resultDiv.innerHTML = `No lucky number found for this combination.`;
+        businessCard.style.display = "none";
       }
     }
   </script>
