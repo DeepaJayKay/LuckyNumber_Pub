@@ -136,6 +136,19 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    .call-to-action {
+      margin-top: 25px;
+      font-size: 22px;
+      color: #ff4d4d;
+      text-shadow: 0 0 8px #ff4d4d;
+      animation: pulseText 1.5s infinite;
+    }
+    
+    @keyframes pulseText {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -145,6 +158,7 @@
     <input type="date" id="dobInput" class="dob-input" /><br>
     <button onclick="findLuckyNumber()">Get Lucky Number</button>
     <div class="result" id="result"></div>
+    <div class="call-to-action" id="ctaMessage" style="display: none;"></div>
 
     <div class="business-card" id="businessCard">
       <div class="top-section">
@@ -208,6 +222,10 @@
       if (luckyNumber) {
         resultDiv.innerHTML = `Your Lucky Number is : <span style="color: gold;">${luckyNumber}</span>`;
         businessCard.style.display = "block";
+        document.getElementById("ctaMessage").style.display = "block";
+        document.getElementById("ctaMessage").innerHTML = 
+          `🌟 Want a detailed prediction about your <strong>Future, Finance, Love, Career</strong> or Life Path?<br>
+          ✨ <strong>Contact Deepa JayKay</strong> for a personalized reading today!`;
       } else {
         resultDiv.innerHTML = `No lucky number found for this combination.`;
         businessCard.style.display = "none";
